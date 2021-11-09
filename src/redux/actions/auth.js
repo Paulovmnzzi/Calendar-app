@@ -76,7 +76,6 @@ export const startCheking = () => {
                 name: body.name
             }))
         } else {
-            Swal.fire('error', body.msg, 'error')
             dispatch(checkingFinish())
         }
 
