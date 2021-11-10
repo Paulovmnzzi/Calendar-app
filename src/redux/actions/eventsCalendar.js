@@ -2,6 +2,7 @@
 import { fetchConToken } from '../../helpers/fetch';
 import { types } from './../types/types';
 import { prepareEvents } from './../../helpers/prepareEvents';
+import Swal from 'sweetalert2';
 
 
 export const startAddNew = (event) => {
@@ -86,6 +87,9 @@ export const startUpdateEvent = (event) => {
             
             if(body.ok){
                 dispatch(eventUpdated(event));
+                Swal.fire("Evento actualizado", body.msg, "success")
+            }else{
+                Swal.fire("Unauthorized", body.msg, "error")
             }
             
         } catch (error) {
@@ -99,3 +103,30 @@ const eventUpdated = (event) => ({
     type: types.eventUpdated,
     payload: event
 })
+
+export const startDeleteEvent = () => {
+    return async(dispatch, getState) => {
+
+        const {activeEvent: event} = getState().calendar
+
+        try {
+            
+            const resp = await fetchConToken(`events/${event._id}`, {} ,'DELETE');
+            const body = await resp.json();
+            
+            console.log(body)
+            console.log(event)
+
+            if(body.ok){
+                dispatch(eventDeleter(event));
+                Swal.fire("Evento eliminado", body.msg, "success")
+            }else{
+                Swal.fire("Unauthorized", body.msg, "error")
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+}

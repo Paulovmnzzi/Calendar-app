@@ -1,11 +1,12 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { eventDeleter, eventClearActiveEvent } from './../../redux/actions/eventsCalendar';
+import { eventClearActiveEvent, startDeleteEvent } from './../../redux/actions/eventsCalendar';
 import Swal from 'sweetalert2'
 
 const DeleteEventFab = () => {
 
     const dispatch = useDispatch();
+
 
     const handleEventDelete = () => {
 
@@ -19,13 +20,8 @@ const DeleteEventFab = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(eventDeleter())
+                dispatch(startDeleteEvent())
                 dispatch(eventClearActiveEvent())
-                Swal.fire(
-                    'Deleted!',
-                    'Your event has been deleted.',
-                    'success'
-                )
             }
         })
 
