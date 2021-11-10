@@ -6,7 +6,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../redux/actions/ui';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from './../../redux/actions/eventsCalendar';
+import { eventClearActiveEvent, startAddNew, startUpdateEvent } from './../../redux/actions/eventsCalendar';
 
 const customStyles = {
     content: {
@@ -26,10 +26,12 @@ const nowPlus1 = now.clone().add(1, 'hours')
 
 const initEvent = {
     title: 'Evento',
-    notes: [],
+    notes: '',
     start: now.toDate(),
     end: nowPlus1.toDate()
 }
+
+
 
 const CalendarModal = () => {
 
@@ -53,7 +55,7 @@ const CalendarModal = () => {
         if (activeEvent) {
             setFormValues(activeEvent);
         }else {
-            setFormValues(initEvent)
+            setFormValues(initEvent);
         }
 
     }, [activeEvent, setFormValues])
@@ -61,17 +63,19 @@ const CalendarModal = () => {
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
-            [target.name]: [target.value],
+            [target.name]: [target.value].toString(),
         })
     }
 
     const handleStartDateChange = (e) => {
         setDateStart(e);
+        setDateEnd(e);
         setFormValues({
             ...formValues,
             start: e
         })
     }
+
     const handleEndDateChange = (e) => {
         setDateEnd(e);
         setFormValues({
@@ -96,15 +100,9 @@ const CalendarModal = () => {
 
         //grabación en base de datos.
         if(activeEvent){
-            dispatch(eventUpdated(formValues))
+            dispatch(startUpdateEvent(formValues));
         } else {
-            dispatch(eventAddNew({
-                ...formValues,
-                id: new Date().getTime(),
-                user: {
-                    uid: new Date().getTime()
-                }
-            }))
+            dispatch(startAddNew(formValues));
         }
 
         setTitleValid(true);
@@ -112,7 +110,7 @@ const CalendarModal = () => {
 
     }
 
-    const closeModal = () => {
+        const closeModal = () => {
         dispatch(uiCloseModal());
         dispatch(eventClearActiveEvent());
         setFormValues(initEvent);

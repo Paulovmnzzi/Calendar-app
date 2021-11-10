@@ -57,6 +57,14 @@
     display: flex;
     justify-content: center;
 }
+/* 
+.single-event{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+
+} */
 
 
 /* FABS  */ 

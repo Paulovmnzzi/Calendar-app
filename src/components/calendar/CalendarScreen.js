@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../ui/Navbar'
 import moment from 'moment'
 
@@ -11,7 +11,7 @@ import CalendarEvent from './CalendarEvent'
 import CalendarModal from './CalendarModal'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../redux/actions/ui';
-import { eventSetActive } from '../../redux/actions/eventsCalendar';
+import { eventSetActive, eventStartLoading } from '../../redux/actions/eventsCalendar';
 import AddNewFab from './../ui/AddNewFab';
 import DeleteEventFab from '../ui/DeleteEventFab';
 import { eventClearActiveEvent } from './../../redux/actions/eventsCalendar';
@@ -21,9 +21,16 @@ const localizer = momentLocalizer(moment);
 
 const CalendarScreen = () => {
 
+
+
     const { events, activeEvent } = useSelector(state => state.calendar)
+    const { uid } = useSelector(state => state.auth)
     const dispatch = useDispatch();
 
+
+    useEffect(() => {
+        dispatch(eventStartLoading())
+    }, [dispatch])
 
     const onDoubleClick = (e) => {
         dispatch(uiOpenModal());
@@ -35,12 +42,24 @@ const CalendarScreen = () => {
     }
 
     const onSelectSlot = (e) => {
-        if(activeEvent){
+        if (activeEvent) {
             dispatch(eventClearActiveEvent())
         }
     }
 
     const eventStyleGetter = (event, start, end, isSelected) => {
+
+        const style = {
+            backgroundColor:  (uid === event.user._id) ? '#367CF7' : '#465660' ,
+            borderRadius: '0px',
+            display: 'block',
+            color: 'white'
+        }
+
+        return {
+            style
+        }
+
     }
 
 

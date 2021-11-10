@@ -10,8 +10,6 @@ export const startLogin = (email, password) => {
 
         const body = await resp.json();
 
-        console.log(body)
-
         if (body.ok) { //este body.ok lo definimos en el backend con true or false dependiendo la situación 
             localStorage.setItem('token', body.token)
             localStorage.setItem('token-init-date', new Date().getTime())
@@ -40,8 +38,6 @@ export const startRegister = (email, password, name) => {
 
         const body = await resp.json();
 
-        console.log(body)
-
         if (body.ok) {
             localStorage.setItem('token', body.token)
             localStorage.setItem('token-init-date', new Date().getTime())
@@ -65,8 +61,6 @@ export const startCheking = () => {
 
         const body = await resp.json();
 
-        console.log(body)
-
         if (body.ok) {
             localStorage.setItem('token', body.token)
             localStorage.setItem('token-init-date', new Date().getTime())
@@ -83,3 +77,16 @@ export const startCheking = () => {
 }
 
 const checkingFinish = () => ({type: types.authCheckingFinish})
+
+export const startLogout = () => {
+    return (dispatch) => {
+
+        localStorage.clear();
+
+        dispatch(logout());
+    }
+}
+
+const logout = () => ({
+    type: types.authLogout,
+})
