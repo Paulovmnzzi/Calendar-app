@@ -10,15 +10,15 @@ const LoginScreen = () => {
     const dispatch = useDispatch();
 
     const [formValues, handleInputChange] = useForm({
-        lemail: 'p4ulo@gmail.com',
-        lpassword: 'p4ulo123'
+        lemail: '',
+        lpassword: ''
     });
    
     const [formRegisterValues, handleRegisterInputChange] = useForm({
-        remail: 'p4ulo@gmail.com',
-        rpassword: 'p4ulo123',
-        rpassword2: 'p4ulo123',
-        rname: 'Paulo',
+        remail: '',
+        rpassword: '',
+        rpassword2: '',
+        rname: '',
     });
 
     const {remail, rpassword, rpassword2, rname} = formRegisterValues;
