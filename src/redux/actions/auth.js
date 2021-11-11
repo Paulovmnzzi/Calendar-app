@@ -19,7 +19,7 @@ export const startLogin = (email, password) => {
                 name: body.name
             }))
         } else {
-            Swal.fire('error', body.msg, 'error')
+            Swal.fire('Hubo un problema :( ', body.msg, 'error')
         }
 
     }
@@ -46,8 +46,9 @@ export const startRegister = (email, password, name) => {
                 uid: body.uid,
                 name: body.name
             }))
+            Swal.fire('Registro exitoso', 'bienvenid@', 'success')
         } else {
-            Swal.fire('error', body.msg, 'error')
+            Swal.fire('Hubo un problema :(', body.msg, 'error')
         }
 
     }

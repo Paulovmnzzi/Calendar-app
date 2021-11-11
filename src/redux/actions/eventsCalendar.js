@@ -25,9 +25,11 @@ export const startAddNew = (event) => {
                 }
 
                 dispatch(eventAddNew(event))
+                Swal.fire('Evento agregado exitosamente ! ', '' , "success")
             }
 
         } catch (error) {
+            Swal.fire("Cuidado !", error, "warning")
         }
 
     }
